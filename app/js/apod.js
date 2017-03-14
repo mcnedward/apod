@@ -8,9 +8,12 @@ function APOD() {
   self.date = ko.observable(moment());
   self.error = ko.observable();
   self.alert = $('.alert');
+  self.loading = ko.observable(false);
 
   function requestImage(requestDate) {
+    self.loading(true);
     fetch('/api/apod?date=' + requestDate).then((response) => {
+      self.loading(false);
       if (!response.ok) {
         response.text().then((text) => {
           self.error(text);
