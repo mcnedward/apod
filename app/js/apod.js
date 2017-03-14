@@ -9,21 +9,28 @@ function APOD() {
   self.error = ko.observable();
   self.alert = $('.alert');
 
-  // fetch('/api/apod').then((response) => {
-  //   if (!response.ok) {
-  //     response.text().then((text) => {
-  //       self.error(text);
-  //       self.alert.fadeIn('slow');
-  //       return;
-  //     });
-  //   }
-  //   response.json().then((data) => {
-  //     self.explanation(data.explanation);
-  //     self.title(data.title);
-  //     self.hdUrl(data.hdurl);
-  //     self.url(data.url);
-  //   });
-  // });
+  function requestImage(requestDate) {
+    fetch('/api/apod?date=' + requestDate).then((response) => {
+      if (!response.ok) {
+        response.text().then((text) => {
+          self.error(text);
+          self.alert.fadeIn('slow');
+          return;
+        });
+      }
+      response.json().then((data) => {
+        self.explanation(data.explanation);
+        self.title(data.title);
+        self.hdUrl(data.hdurl);
+        self.url(data.url);
+      });
+    });
+  }
+
+  ko.computed(() => {
+    var requestDate = moment(self.date()).format('YYYY-MM-DD');
+    requestImage(requestDate);
+  })
 
   self.closeAlert = () => {
     self.alert.fadeOut('slow');

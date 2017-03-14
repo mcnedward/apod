@@ -26,9 +26,6 @@
     $(document).ready(() => {
       var apod = new APOD();
       ko.applyBindings(apod);
-      $('#datetimepicker').datetimepicker({
-        format: 'MM/DD/YYYY'
-      });
     });
   </script>
 
@@ -42,13 +39,13 @@
 
     <div class="pt-3">
       <div class="row">
-        <div class="col-6 col-sm-4 col-md-3">
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
           <div class="form-group">
-            <div class="input-group date" id="datetimepicker">
-              <input type="text" class="form-control" data-bind="dateTimePicker: date">
+            <div class="input-group date" data-bind="dateTimePicker: date">
+              <input type="text" class="form-control">
               <span class="input-group-addon">
-              <i class="fa fa-calendar" aria-hidden="true"></i>
-            </span>
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+              </span>
             </div>
           </div>
         </div>

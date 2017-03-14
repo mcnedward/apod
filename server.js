@@ -31,7 +31,7 @@ const apiKey = 'yBP7s9oe5rIrLKmTV3CjZzxFlR8WeifXAhvQkxBC',
       apodUrl = 'https://api.nasa.gov/planetary/apod';
 
 app.get('/api/apod', (req, res) => {
-  request.get(apodUrl + '?api_key=' + apiKey, (err, response, body) => {
+  request.get(apodUrl + '?date=' + req.query.date + '&api_key=' + apiKey, (err, response, body) => {
     if (err) {
       console.warn(err);
       res.status(400).send(err);
@@ -39,7 +39,9 @@ app.get('/api/apod', (req, res) => {
       if (response.statusCode === 200) {
         res.status(200).send(body);
       } else {
-        res.status(400).text('Sorry, something was wrong with your request...');
+        var message = JSON.parse(body).msg;
+        console.log('Message: ' + message);
+        res.status(400).send(message);
       }
     }
   });
