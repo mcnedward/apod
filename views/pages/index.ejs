@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/head %>
+</head>
+
+<body>
+  <script>
+    // https://gist.github.com/kerimdzhanov/7529623turn
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    function randomColor(alpha) {
+      var r = parseInt(randomInt(0, 99), 16);
+      var g = parseInt(randomInt(0, 99), 16);
+      var b = parseInt(randomInt(0, 99), 16);
+      var a = alpha ? parseInt(alpha, 16) / 255 : 100;
+      return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+    }
+  </script>
+  <script>
+    $(document).ready(() => {
+      var apod = new APOD();
+      ko.applyBindings(apod);
+      $('#datetimepicker').datetimepicker({
+        format: 'MM/DD/YYYY'
+      });
+    });
+  </script>
+
+  <div id="main" class="container-fluid">
+    <div class="alert alert-danger collapse mt-2" role="alert">
+      <button type="button" class="close" data-bind="click: closeAlert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong data-bind="text: error"></strong>
+    </div>
+
+    <div class="pt-3">
+      <div class="row">
+        <div class="col-6 col-sm-4 col-md-3">
+          <div class="form-group">
+            <div class="input-group date" id="datetimepicker">
+              <input type="text" class="form-control" data-bind="dateTimePicker: date">
+              <span class="input-group-addon">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="text-md-left text-sm-center col-sm-12 col-md-4">
+          <h2 data-bind="text: title"></h2>
+          <p data-bind="text: explanation"></p>
+        </div>
+        <div class="text-sm-center col-sm-12 col-md-8">
+          <img class="img-apod" data-bind="attr:{src: hdUrl}" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
