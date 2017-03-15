@@ -8,9 +8,7 @@ function AstroPicOfDay(service) {
   self.apods = ko.observableArray();
   self.rows = ko.observableArray();
   self.error = ko.observable();
-  self.warning = ko.observable();
   var alertError = $('#alertError');
-  var alertWarning = $('#alertWarning');
   const dateFormat = 'YYYY-MM-DD';
 
   /**
@@ -18,6 +16,15 @@ function AstroPicOfDay(service) {
    * @param {*[]} apods - An array of apod objects
    */
   function layoutImages(apods) {
+    // Clear the old
+    self.rows.removeAll();
+    // Sort by date
+    self.apods.sort((left, right) => {
+      var leftDate = moment(left.date);
+      var rightDate = moment(right.date);
+      return leftDate.isSame(rightDate) ? 0 : (leftDate.isAfter(rightDate) ? 1 : -1);
+    })
+
     var cols = [];
     for (var i = 1; i <= apods.length; i++) {
       cols.push(apods[i - 1]);
@@ -42,6 +49,7 @@ function AstroPicOfDay(service) {
   }
 
   function loadImages() {
+    self.apods.removeAll();
     var dayDiff = moment(self.toDate()).diff(moment(self.fromDate()), 'd');
     self.loadCount(dayDiff);
     var fromDate = moment(self.fromDate());
@@ -71,13 +79,13 @@ function AstroPicOfDay(service) {
     }
     var monthBefore = moment(self.toDate.peek()).subtract(1, 'M');
     if (fromDate.isBefore(monthBefore, 'day')) {
-      showWarning('Too far in the past!');
+      showError('Too far in the past!');
       self.fromDate(rawFromDate);
       return;
     }
     var dayBefore = moment(self.toDate.peek()).subtract(1, 'd');
     if (fromDate.isAfter(dayBefore, 'day')) {
-      showWarning('Too far in the future!');
+      showError('Too far in the future!');
       self.fromDate(rawFromDate);
       return;
     }
@@ -97,13 +105,13 @@ function AstroPicOfDay(service) {
     }
     var monthAfter = moment(self.fromDate.peek()).add(1, 'M');
     if (toDate.isAfter(monthAfter, 'day')) {
-      showWarning('Too far in the future!');
+      showError('Too far in the future!');
       self.toDate(rawToDate);
       return;
     }
     var dayAfter = moment(self.fromDate.peek()).add(1, 'd');
     if (toDate.isBefore(dayAfter, 'day')) {
-      showWarning('Too far in the past!');
+      showError('Too far in the past!');
       self.toDate(rawToDate);
       return;
     }
@@ -124,14 +132,7 @@ function AstroPicOfDay(service) {
     self.error(text);
     alertError.fadeIn('slow');
   }
-  function showWarning(text) {
-    self.warning(text);
-    alertWarning.fadeIn('slow');
-  }
   self.closeAlertError = () => {
     alertError.fadeOut('slow');
-  }
-  self.closeAlertWarning = () => {
-    alertWarning.fadeOut('slow');
   }
 }

@@ -37,16 +37,11 @@
       </button>
       <strong data-bind="html: error"></strong>
     </div>
-    <div class="alert alert-warning collapse mt-2" role="alert" id="alertWarning">
-      <button type="button" class="close" data-bind="click: closeAlertWarning" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <strong data-bind="html: warning"></strong>
-    </div>
 
     <div class="pt-3">
+      <h3 class="text-center text-md-left">NASA Astronomy Picture of the Day Calendar</h3>
       <div class="row">
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
           <div class="form-group">
             <div class="input-group date" data-bind="dateTimePicker: fromDate">
               <span class="input-group-addon" id="from">From</span>
@@ -57,7 +52,7 @@
             </div>
           </div>
         </div>
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
           <div class="form-group">
             <div class="input-group date" data-bind="dateTimePicker: toDate">
               <span class="input-group-addon" id="to">To</span>
