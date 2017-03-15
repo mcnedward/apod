@@ -1,4 +1,4 @@
-function AstroPicOfDay() {
+function AstroPicOfDay(service) {
   var self = this;
 
   self.date = ko.observable(moment());
@@ -38,31 +38,19 @@ function AstroPicOfDay() {
     }, 500)
   }
 
-  function requestImage(requestDate) {
-    fetch('/api/apod?date=' + requestDate).then((response) => {
-      if (!response.ok) {
-        response.text().then((text) => {
-          self.error(text);
-          self.alert.fadeIn('slow');
-        });
-        return;
-      }
-      response.json().then((data) => {
-        self.apods.push(new Apod(data));
-      });
-    });
+  function successCallback(apod) {
+    self.apods.push(apod);
+  }
+  function errorCallback(text) {
+    self.error(text);
+    self.alert.fadeIn('slow');
   }
 
   self.loadCount(31);
   for (var i = 1; i <= self.loadCount(); i++) {
     var date = i < 10 ? '0' + i : i;
     var requestDate = '2017-01-' + date;
-    // requestImage(requestDate);
-
-    self.apods.push(new Apod({
-      title: 'Something ' + i,
-      url: '/img/face.png'
-    }));
+    service.getApod(requestDate, successCallback, errorCallback);
   }
 
   ko.computed(() => {

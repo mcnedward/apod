@@ -24,7 +24,8 @@
   </script>
   <script>
     $(document).ready(() => {
-      var astroPicOfDay = new AstroPicOfDay();
+      var service = new AstroService();
+      var astroPicOfDay = new AstroPicOfDay(service);
       ko.applyBindings(astroPicOfDay);
     });
   </script>
@@ -50,14 +51,15 @@
           </div>
         </div>
       </div>
-
+      
       <div data-bind="foreach: rows">
         <div data-bind="foreach: $data">
-          <a tabindex="0" class="popover-dismiss" data-bind="attr:{title: title}" data-toggle="popover" data-trigger="focus" data-placement="bottom">
+          <a tabindex="0" class="popover-dismiss" data-bind="attr:{title: title, 'data-content': explanation}" data-toggle="popover" data-trigger="focus" data-placement="bottom">
             <img class="img-apod" data-bind="attr:{src: url}"/>
           </a>
         </div>
       </div>
+
       <div class="w-100" data-bind="visible: loading">
         <div class="d-flex justify-content-center pt-5 mt-5">
           <div class="progress w-50">

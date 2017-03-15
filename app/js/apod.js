@@ -6,4 +6,14 @@ function Apod(data) {
   self.title = ko.observable(data ? data.title : null);
   self.hdUrl = ko.observable(data ? data.hdurl : null);
   self.url = ko.observable(data && data.url ? data.url : '');
+
+  self.toJSON = () => {
+    return {
+      data: self.date(),
+      explanation: self.explanation(),
+      title: self.title(),
+      hdUrl: self.hdUrl(),
+      url: self.url()
+    };
+  }
 }
