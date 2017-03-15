@@ -55,7 +55,8 @@ function AstroService() {
     if (!apods) {
       apods = {};
     }
-    apods[apod.date()] = apod.toJSON();
+    apods[apod.date] = apod;
     localStorage.setItem(apodKey, JSON.stringify(apods));
   }
+
 }

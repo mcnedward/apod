@@ -72,15 +72,12 @@
 
       <div data-bind="foreach: rows">
         <div class="d-flex d-row" data-bind="foreach: $data">
-          <a tabindex="0" class="popover-dismiss" data-bind="attr:{title: title, 'data-content': explanation}" data-toggle="popover"
+          <a tabindex="0" class="popover-dismiss" data-bind="attr:{title: titleAndDate, 'data-content': explanation}" data-toggle="popover"
             data-trigger="focus" data-placement="bottom">
-            <!-- ko ifnot: isVideo -->
+            <!-- ko if: mediaType === 'image' -->
             <img class="img-fluid img-apod" data-bind="attr:{src: url}" />
             <!-- /ko -->
-            <!-- ko if: isVideo -->
-            <!--<div class="vid-apod embed-responsive embed-responsive-16by9">-->
-              <!--<iframe class="embed-responsive-item" data-bind="attr:{src: url}" allowfullscreen></iframe>-->
-            <!--</div>-->
+            <!-- ko if: mediaType === 'video' -->
             <iframe class="img-fluid img-apod" data-bind="attr:{src: url}" allowfullscreen></iframe>
             <!-- /ko -->
           </a>
@@ -96,15 +93,6 @@
         </div>
       </div>
 
-      <div class="row">
-        <!--<div class="text-md-left text-sm-center col-sm-12 col-md-4" data-bind="visible: !loading()">
-          <h2 data-bind="text: title"></h2>
-          <p data-bind="text: explanation"></p>
-        </div>
-        <div class="text-sm-center col-sm-12 col-md-8" data-bind="visible: !loading()">
-          <img class="img-apod" data-bind="attr:{src: url}" />
-        </div>-->
-      </div>
     </div>
   </div>
 

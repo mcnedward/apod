@@ -11,9 +11,10 @@ function AstroPicOfDay(service) {
   self.warning = ko.observable();
   var alertError = $('#alertError');
   var alertWarning = $('#alertWarning');
+  const dateFormat = 'YYYY-MM-DD';
 
   /**
-   * Creates the grids for the apods
+   * Creates the grids for the apods. Should only be called once all APIs have finished (check self.loadCount())
    * @param {*[]} apods - An array of apod objects
    */
   function layoutImages(apods) {
@@ -40,19 +41,17 @@ function AstroPicOfDay(service) {
     }, 500)
   }
 
-  function successCallback(apod) {
-    self.apods.push(apod);
+  function loadImages() {
+    var dayDiff = moment(self.toDate()).diff(moment(self.fromDate()), 'd');
+    self.loadCount(dayDiff);
+    var fromDate = moment(self.fromDate());
+    for (var i = 0; i <= self.loadCount(); i++) {
+      var requestDate = fromDate.format(dateFormat);
+      service.getApod(requestDate, successCallback, errorCallback);
+      fromDate.add(1, 'd')
+    }
   }
-  function errorCallback(text) {
-    showError(text);
-  }
-
-  self.loadCount(31);
-  for (var i = 1; i <= self.loadCount(); i++) {
-    var date = i < 10 ? '0' + i : i;
-    var requestDate = '2017-01-' + date;
-    service.getApod(requestDate, successCallback, errorCallback);
-  }
+  loadImages();
 
   ko.computed(() => {
     var apodCount = self.apods().length;
@@ -62,35 +61,65 @@ function AstroPicOfDay(service) {
     }
   })
 
+  var rawFromDate;
   // Validate the fromDate
   ko.computed(() => {
     var fromDate = moment(self.fromDate());
+    if (rawFromDate && rawFromDate.isSame(fromDate, 'day')) {
+      // No change, so nothing to do here
+      return;
+    }
     var monthBefore = moment(self.toDate.peek()).subtract(1, 'M');
     if (fromDate.isBefore(monthBefore, 'day')) {
       showWarning('Too far in the past!');
-      self.fromDate(monthBefore);
+      self.fromDate(rawFromDate);
+      return;
     }
     var dayBefore = moment(self.toDate.peek()).subtract(1, 'd');
     if (fromDate.isAfter(dayBefore, 'day')) {
       showWarning('Too far in the future!');
-      self.fromDate(dayBefore);
+      self.fromDate(rawFromDate);
+      return;
     }
+    if (rawFromDate) {
+      // Don't load images if this is the first time
+      loadImages()
+    }
+    rawFromDate = moment(self.fromDate.peek());
   });
+  var rawToDate;
   // Validate the toDate
   ko.computed(() => {
     var toDate = moment(self.toDate());
+    if (rawToDate && rawToDate.isSame(toDate, 'day')) {
+      // No change, so nothing to do here
+      return;
+    }
     var monthAfter = moment(self.fromDate.peek()).add(1, 'M');
     if (toDate.isAfter(monthAfter, 'day')) {
       showWarning('Too far in the future!');
-      self.toDate(monthAfter);
+      self.toDate(rawToDate);
+      return;
     }
     var dayAfter = moment(self.fromDate.peek()).add(1, 'd');
     if (toDate.isBefore(dayAfter, 'day')) {
       showWarning('Too far in the past!');
-      self.toDate(dayAfter);
+      self.toDate(rawToDate);
+      return;
     }
+    if (rawToDate) {
+      // Don't load images if this is the first time
+      loadImages()
+    }
+    rawToDate = moment(self.toDate.peek());
   });
 
+  function successCallback(apod) {
+    self.apods.push(apod);
+  }
+  function errorCallback(text) {
+    showError(text);
+  }
   function showError(text) {
     self.error(text);
     alertError.fadeIn('slow');
