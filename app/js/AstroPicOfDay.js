@@ -18,7 +18,7 @@ function AstroPicOfDay(service) {
     var cols = [];
     for (var i = 1; i <= apods.length; i++) {
       cols.push(apods[i - 1]);
-      if (i % 12 === 0) {
+      if (i % 7 === 0) {
         // Create a row of 12
         self.rows.push(cols);
         cols = [];
