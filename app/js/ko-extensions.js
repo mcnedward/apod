@@ -1,7 +1,17 @@
 ko.bindingHandlers.dateTimePicker = {
   init: function (element, valueAccessor, allBindingsAccessor) {
     //initialize datepicker with some optional options
-    var options = allBindingsAccessor().dateTimePickerOptions || {format: 'MMM Do, YYYY'};
+    var options = allBindingsAccessor().dateTimePickerOptions || {
+      format: 'MMM Do, YYYY',
+      icons: {
+        time: "fa fa-clock-o",
+        date: "fa fa-calendar",
+        up: "fa fa-arrow-up",
+        down: "fa fa-arrow-down",
+        next: "fa fa-arrow-right",
+        previous: "fa fa-arrow-left"
+      }
+    };
     $(element).datetimepicker(options);
 
     //when a user changes the date, update the view model

@@ -31,19 +31,37 @@
   </script>
 
   <div id="main" class="container-fluid">
-    <div class="alert alert-danger collapse mt-2" role="alert">
-      <button type="button" class="close" data-bind="click: closeAlert" aria-label="Close">
+    <div class="alert alert-danger collapse mt-2" role="alert" id="alertError">
+      <button type="button" class="close" data-bind="click: closeAlertError" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
       <strong data-bind="html: error"></strong>
+    </div>
+    <div class="alert alert-warning collapse mt-2" role="alert" id="alertWarning">
+      <button type="button" class="close" data-bind="click: closeAlertWarning" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong data-bind="html: warning"></strong>
     </div>
 
     <div class="pt-3">
       <div class="row">
         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
           <div class="form-group">
-            <div class="input-group date" data-bind="dateTimePicker: date">
-              <input type="text" class="form-control">
+            <div class="input-group date" data-bind="dateTimePicker: fromDate">
+              <span class="input-group-addon" id="from">From</span>
+              <input type="text" class="form-control" aria-describedby="from">
+              <span class="input-group-addon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="form-group">
+            <div class="input-group date" data-bind="dateTimePicker: toDate">
+              <span class="input-group-addon" id="to">To</span>
+              <input type="text" class="form-control" aria-describedby="to">
               <span class="input-group-addon">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
               </span>

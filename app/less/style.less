@@ -21,8 +21,6 @@ a img {
 @width-sm: 64px;
 @width-xs: 32px;
 
-
-
 // Extra small devices (portrait phones, less than 576px)
 // No media query since this is the default in Bootstrap
 .img-apod {
@@ -34,7 +32,10 @@ a {
 }
 
 // Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) { 
+@media (min-width: 576px) {
+  .alert {
+    width: 60%;
+  }
   .img-apod {
     width: @width-sm;
     height: @width-sm;
@@ -46,6 +47,9 @@ a {
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) { 
+  .alert {
+    width: 50%;
+  }
   .img-apod {
     width: @width-md;
     height: @width-md;
@@ -57,6 +61,9 @@ a {
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) { 
+  .alert {
+    width: 40%;
+  }
   .img-apod {
     width: @width-lg;
     height: @width-lg;
@@ -68,6 +75,9 @@ a {
 
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) { 
+  .alert {
+    width: 40%;
+  }
   .img-apod {
     width: @width-lg;
     height: @width-lg;

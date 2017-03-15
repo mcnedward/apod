@@ -1,14 +1,16 @@
 function AstroPicOfDay(service) {
   var self = this;
 
-  self.date = ko.observable(moment());
-  self.error = ko.observable();
-  self.alert = $('.alert');
+  self.fromDate = ko.observable(moment().subtract(1, 'M'));
+  self.toDate = ko.observable(moment());
   self.loading = ko.observable(true);
-
   self.loadCount = ko.observable();
   self.apods = ko.observableArray();
   self.rows = ko.observableArray();
+  self.error = ko.observable();
+  self.warning = ko.observable();
+  var alertError = $('#alertError');
+  var alertWarning = $('#alertWarning');
 
   /**
    * Creates the grids for the apods
@@ -42,8 +44,7 @@ function AstroPicOfDay(service) {
     self.apods.push(apod);
   }
   function errorCallback(text) {
-    self.error(text);
-    self.alert.fadeIn('slow');
+    showError(text);
   }
 
   self.loadCount(31);
@@ -61,7 +62,47 @@ function AstroPicOfDay(service) {
     }
   })
 
-  self.closeAlert = () => {
-    self.alert.fadeOut('slow');
+  // Validate the fromDate
+  ko.computed(() => {
+    var fromDate = moment(self.fromDate());
+    var monthBefore = moment(self.toDate.peek()).subtract(1, 'M');
+    if (fromDate.isBefore(monthBefore, 'day')) {
+      showWarning('Too far in the past!');
+      self.fromDate(monthBefore);
+    }
+    var dayBefore = moment(self.toDate.peek()).subtract(1, 'd');
+    if (fromDate.isAfter(dayBefore, 'day')) {
+      showWarning('Too far in the future!');
+      self.fromDate(dayBefore);
+    }
+  });
+  // Validate the toDate
+  ko.computed(() => {
+    var toDate = moment(self.toDate());
+    var monthAfter = moment(self.fromDate.peek()).add(1, 'M');
+    if (toDate.isAfter(monthAfter, 'day')) {
+      showWarning('Too far in the future!');
+      self.toDate(monthAfter);
+    }
+    var dayAfter = moment(self.fromDate.peek()).add(1, 'd');
+    if (toDate.isBefore(dayAfter, 'day')) {
+      showWarning('Too far in the past!');
+      self.toDate(dayAfter);
+    }
+  });
+
+  function showError(text) {
+    self.error(text);
+    alertError.fadeIn('slow');
+  }
+  function showWarning(text) {
+    self.warning(text);
+    alertWarning.fadeIn('slow');
+  }
+  self.closeAlertError = () => {
+    alertError.fadeOut('slow');
+  }
+  self.closeAlertWarning = () => {
+    alertWarning.fadeOut('slow');
   }
 }
