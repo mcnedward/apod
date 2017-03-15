@@ -39,7 +39,16 @@ app.get('/api/apod', (req, res) => {
       if (response.statusCode === 200) {
         res.status(200).send(body);
       } else {
-        var message = JSON.parse(body).msg;
+        var data = JSON.parse(body)
+        var message;
+        if (data && data.msg) {
+          message = data.msg;
+        } else if (data && data.error && data.error.message) {
+          message = data.error.message;
+        } else {
+          console.warn('Data response from NASA API: ', data);
+          message = 'Something went wrong when trying to get the Astronomy Picture of the Day, please try again later.';
+        }
         console.log('Message: ' + message);
         res.status(400).send(message);
       }

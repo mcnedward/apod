@@ -24,8 +24,8 @@
   </script>
   <script>
     $(document).ready(() => {
-      var apod = new APOD();
-      ko.applyBindings(apod);
+      var astroPicOfDay = new AstroPicOfDay();
+      ko.applyBindings(astroPicOfDay);
     });
   </script>
 
@@ -34,7 +34,7 @@
       <button type="button" class="close" data-bind="click: closeAlert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <strong data-bind="text: error"></strong>
+      <strong data-bind="html: error"></strong>
     </div>
 
     <div class="pt-3">
@@ -51,23 +51,30 @@
         </div>
       </div>
 
+      <div data-bind="foreach: rows">
+        <div data-bind="foreach: $data">
+          <a tabindex="0" class="popover-dismiss" data-bind="attr:{title: title}" data-toggle="popover" data-trigger="focus" data-placement="bottom">
+            <img class="img-apod" data-bind="attr:{src: url}"/>
+          </a>
+        </div>
+      </div>
+      <div class="w-100" data-bind="visible: loading">
+        <div class="d-flex justify-content-center pt-5 mt-5">
+          <div class="progress w-50">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success pt-5" role="progressbar" aria-valuenow="100"
+              aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
-        <div class="text-md-left text-sm-center col-sm-12 col-md-4" data-bind="visible: !loading()">
+        <!--<div class="text-md-left text-sm-center col-sm-12 col-md-4" data-bind="visible: !loading()">
           <h2 data-bind="text: title"></h2>
           <p data-bind="text: explanation"></p>
         </div>
         <div class="text-sm-center col-sm-12 col-md-8" data-bind="visible: !loading()">
           <img class="img-apod" data-bind="attr:{src: url}" />
-        </div>
-        
-        <div class="w-100" data-bind="visible: loading">
-          <div class="d-flex justify-content-center pt-5 mt-5">
-            <div class="progress w-50">
-              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success pt-5" role="progressbar" aria-valuenow="100"
-                aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-            </div>
-          </div>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
