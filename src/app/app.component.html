@@ -1,0 +1,87 @@
+<header class="header">
+  <h1>APOD</h1>
+  <h2>NASA Astronomy Picture of the Day</h2>
+  <h3><a href="https://github.com/mcnedward/apod">View the code on GitHub</a></h3>
+</header>
+
+<main>
+  <angualert-box></angualert-box>
+
+  <ng-container *ngIf="!loading">
+    <form class="form">
+      <datepicker [options]="startDatepickerOptions" #startDatepicker></datepicker>
+      <datepicker [options]="endDatepickerOptions" #endDatepicker></datepicker>
+    </form>
+
+    <div class="apod-calendar">
+      <a *ngFor="let apod of allApods" tabindex="0">
+        <apod [apod]="apod" (apodSelected)="onApodSelected($event)"></apod>
+      </a>
+    </div>
+  </ng-container>
+
+  <div class="loading-container" *ngIf="loading">
+    <div class="preloader-wrapper big active">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="apodModal" class="modal">
+    <div class="modal-content" *ngIf="selectedApod != null">
+      <h4>{{selectedApod.title}}</h4>
+      <p>{{selectedApod.explanation}}</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span><a href="https://github.com/mcnedward/angualert"><img src="../assets/github.png" alt="Github" /></a></span>
+  <span><a href="https://www.linkedin.com/in/mcnedward"><img src="../assets/linkedin.png" alt="LinkedIn" /></a></span>
+  <label><a href="https://edwardmcnealy.com">&copy; {{copyrightDate}} Edward McNealy</a></label>
+</footer>

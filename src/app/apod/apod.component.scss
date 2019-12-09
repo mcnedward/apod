@@ -1,0 +1,62 @@
+.card {
+  &.small {
+    width: 300px;
+  }
+  &.small .card-image {
+    height: 85%;
+    max-height: 85%;
+    display: flex;
+    align-items: center;
+    background-color: black;
+  }
+
+  .card-image img {
+    border-radius: 0;
+  }
+
+  .card-image iframe {
+    border: 0;
+  }
+
+  .card-title {
+    padding: 0 8px 8px;
+  }
+
+  .card-content {
+    padding: 12px;
+
+    p {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  .card-action {
+    padding: 8px 12px;
+    border-top: 0;
+
+    a {
+      cursor: pointer;
+    }
+  }
+}
+
+.lazy-loading {
+
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 3s;
+}

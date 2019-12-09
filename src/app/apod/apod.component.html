@@ -1,0 +1,20 @@
+<div class="card small" [id]="id">
+
+  <div class="card-image">
+    <ng-container *ngIf="apod.mediaType === 'image'">
+      <img class="materialboxed" width="200" #apodImgElement>
+    </ng-container>
+    <ng-container *ngIf="apod.mediaType !== 'image'">
+      <iframe class="img-full" [src]="apod.url | safe" allowfullscreen></iframe>
+    </ng-container>
+    <span class="card-title">{{apod.date}}</span>
+  </div>
+
+  <div class="card-content">
+    <p>{{apod.title}} - {{apod.date}}</p>
+  </div>
+
+  <div class="card-action">
+    <a (click)="openModal(apod)">Details</a>
+  </div>
+</div>

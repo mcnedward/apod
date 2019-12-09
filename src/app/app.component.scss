@@ -1,0 +1,30 @@
+.header {
+  text-align: center;
+}
+
+main {
+  padding-top: 1rem;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 4rem;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    padding-right: 1rem;
+  }
+}
+
+.apod-calendar {
+  padding: 1rem 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}

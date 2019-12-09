@@ -1,0 +1,79 @@
+@import 'materialize';
+
+html,
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  font-family: "Titillium Web", sans-serif;
+  background-color: white;
+  font-size: 16px;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+header, footer {
+  flex: none;
+}
+
+header {
+  border: 1px solid #f2efef
+}
+
+main {
+  flex: 1 0 auto;
+  padding: var(--space) var(--space) 0;
+  width: 100%;
+}
+main::after {
+  content: '\00a0'; /* &nbsp; */
+  display: block;
+  margin-top: var(--space);
+  height: 0px;
+  visibility: hidden;
+}
+@media (--break-lg) {
+  main {
+    padding-top: var(--space-lg);
+  }
+  main::after {
+    margin-top: var(--space-lg);
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #CF4647;
+  padding-top: 0.5rem;
+
+  span {
+    margin-right: 0.5rem;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3rem;
+  }
+  a:hover {
+    opacity: 0.5;
+  }
+
+  img {
+    width: 32px;
+  }
+}
+
+.img-full {
+  width: 100%;
+  height: 100%;
+}
+.img-shadow {
+  box-shadow: 3px 3px 2px #515151;
+}
