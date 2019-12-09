@@ -4,5 +4,5 @@ NASA Astronomy Picture of the Day
 
 ## Running the web app
 
-`npm install`
+`npm install`  
 `npm start`
